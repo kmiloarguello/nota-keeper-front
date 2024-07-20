@@ -56,8 +56,6 @@ import PreviewVideo_8 from './images/image-show-steps/8-Create-PreviewVideo.png'
 import Share_9 from './images/image-show-steps/9-Create-Share.png';
 // Images
 import PlatformBG from './images/platform-bg-opacity.png';
-import TeamAmer from './images/team/nota_keeper-team-amer.png';
-import TeamKhodr from './images/team/nota_keeper-team-khodr.png';
 
 export { 
   IconProfile,
@@ -114,6 +112,4 @@ export {
   SummaryReview_7,
   PreviewVideo_8,
   Share_9,
-  TeamAmer,
-  TeamKhodr
 };

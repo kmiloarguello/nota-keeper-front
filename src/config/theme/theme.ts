@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme } from '@mui/material/styles';
 
 export const reds = {
   100: "#FFCDD2",
@@ -33,27 +33,6 @@ export const gradients = {
   purples: "linear-gradient(90deg, #A70DF2 0%, #7545EA 100%);",
   purplesDark:
     "linear-gradient(90deg, rgba(167, 13, 242, 0.4) 0%, rgba(117, 69, 234, 0.4) 100%);",
-  blues: "linear-gradient(90deg, #3E83E1 0%, #01CAD7 100%);",
-  home: "linear-gradient(115.38deg, #7545EA 0%, #0C123A 32.14%, #0C123A 58.93%, rgba(186, 69, 230, 0.77) 89.28%);",
-  body: "linear-gradient(180deg, #7545EA 0%, #0C123A 49.5%, #0C123A 73.5%, #7545EA 100%);",
-  blackTransparencyLeft:
-    "linear-gradient(90deg, #0C123A 0%, rgba(0,0,0,0) 100%);",
-  blackTransparencyRight:
-    "linear-gradient(90deg, rgba(0,0,0,0) 0%, #0C123A 100%);",
-  homeBottomTransparency:
-    "linear-gradient(180deg, rgba(12, 18, 58, 0) 0%, rgba(177, 0, 243, 0.7) 100%);",
-  homeTabsBg:
-    "linear-gradient(90deg, rgba(167, 13, 242, 0.25) 0%, rgba(117, 69, 234, 0.5) 100%);",
-  cardGlass:
-    "linear-gradient(156.04deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.08) 19.92%, rgba(255, 255, 255, 0) 100%);",
-  cardPriceGlass:
-    "linear-gradient(180deg, #FFFFFF 0%, #A1F9FF 21%, #7545EA 80%, #5f5766 100%);",
-  fullVerticalPage:
-    "linear-gradient(180deg, #3E83E1 0%, #0C123A 49.5%, #0C123A 73.5%, #A70DF2 100%);",
-  cardAboutGradient:
-    "linear-gradient(180deg, rgba(157, 62, 244, 0.25) 0%, rgba(88, 146, 253, 0.5) 100%);",
-  policyGradient:
-    "linear-gradient(180deg, rgba(157, 62, 244, 1) 0%, rgba(88, 146, 253, 1) 100%);",
 };
 
 export const lightPaletteText = {

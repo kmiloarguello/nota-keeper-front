@@ -1,4 +1,5 @@
 
+import { Home } from 'pages';
 import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom';
 
 const router = () =>
@@ -7,7 +8,7 @@ const router = () =>
       <Route
         path="/"
         element={
-          <div>CA</div>
+          <Home nav={0} />
         }
       />
     ])
