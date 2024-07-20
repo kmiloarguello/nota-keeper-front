@@ -1,1 +1,3 @@
-export * from "./api.service";
+import NotaService from './nota.service';
+
+export { NotaService };

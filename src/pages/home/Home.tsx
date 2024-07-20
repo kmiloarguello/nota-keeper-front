@@ -1,4 +1,5 @@
 import { Menu } from 'components';
+import { useNotas } from 'hooks';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -11,6 +12,10 @@ interface CreatePageProps {
 
 const CreatePage : FC<CreatePageProps> = ({ children, nav }) => {
   const { t } = useTranslation();
+  const notas = useNotas();
+  
+  console.log('notas', notas);
+
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   return (
     <Box className="bg-white flex flex-col flex-auto items-center sm:justify-center min-w-0 md:h-full">

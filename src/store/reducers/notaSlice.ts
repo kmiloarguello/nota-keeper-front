@@ -5,13 +5,13 @@ import type { NotaState } from "../store";
 
 export const notaSlice = createSlice({
   name: "nota",
-  initialState: ({} as NotaType) || null,
+  initialState: [] as NotaType[],
   reducers: {
-    setNota: (state, action: PayloadAction<NotaType>) => action.payload,
-    clearNota: () => ({}) as NotaType,
+    setNotas: (state, action: PayloadAction<NotaType[]>) => action.payload,
+    clearNota: () => [],
   },
 });
 
-export const { setNota, clearNota } = notaSlice.actions;
-export const selectNota = (state: NotaState) => state.language;
+export const { setNotas, clearNota } = notaSlice.actions;
+export const selectNotas = (state: NotaState) => state.nota;
 export default notaSlice.reducer;

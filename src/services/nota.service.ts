@@ -1,14 +1,17 @@
 import axios from 'axios';
 
-class ApiService {
+import { NotaTypeRequest, NotaTypeResponse } from '@/@types';
+
+class NotaService {
   baseUrl: string;
 
   constructor() {
-    this.baseUrl = "http://example.com/api/resource";
+    this.baseUrl =
+      `${process.env.REACT_APP_API_URL}/notes` || "http://localhost:8000/notes";
   }
 
   // Create a new resource
-  async create(data: any): Promise<any> {
+  async create(data: NotaTypeRequest): Promise<NotaTypeResponse> {
     try {
       const response = await axios.post(`${this.baseUrl}`, data);
       return response.data;
@@ -20,7 +23,7 @@ class ApiService {
   }
 
   // Read (get) a single resource by ID
-  async getById(id: string): Promise<any> {
+  async getById(id: string): Promise<NotaTypeResponse> {
     try {
       const response = await axios.get(`${this.baseUrl}/${id}`);
       return response.data;
@@ -32,7 +35,7 @@ class ApiService {
   }
 
   // Read (get) all resources
-  async getAll(): Promise<any[]> {
+  async getAll(): Promise<NotaTypeResponse[]> {
     try {
       const response = await axios.get(`${this.baseUrl}`);
       return response.data;
@@ -44,7 +47,7 @@ class ApiService {
   }
 
   // Update a resource by ID
-  async update(id: string, data: any): Promise<any> {
+  async update(id: string, data: NotaTypeRequest): Promise<NotaTypeResponse> {
     try {
       const response = await axios.put(`${this.baseUrl}/${id}`, data);
       return response.data;
@@ -68,4 +71,4 @@ class ApiService {
   }
 }
 
-export default ApiService;
+export default NotaService;
