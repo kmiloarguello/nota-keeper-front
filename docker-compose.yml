@@ -1,0 +1,23 @@
+version: '3.7'
+services:
+  nota_keeper_frontend:
+    container_name: nota_keeper_frontend
+    restart: always
+    build: 
+      context: .
+      args:
+        - REACT_APP_API_URL=${REACT_APP_API_URL}
+    env_file:
+      - .env
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.nota_keeper_frontend.entrypoints=websecure"
+      - "traefik.http.routers.nota_keeper_frontend.rule=Host(`app.nota_keeper.ai`)"
+      - "traefik.http.routers.nota_keeper_frontend.service=nota_keeper_frontend"
+      - "traefik.http.services.nota_keeper_frontend.loadbalancer.server.port=8000"
+networks:
+  proxy:
+    external: true
