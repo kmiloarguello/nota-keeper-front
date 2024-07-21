@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from "@mui/material/styles";
 
 export const reds = {
   100: "#FFCDD2",
@@ -72,8 +72,8 @@ const theme = createTheme({
       contrastText: lightPaletteText.primary,
     },
     background: {
-      paper: greyIsh[300],
-      default: greyIsh[400],
+      paper: greyIsh[200],
+      default: greyIsh[100],
     },
     error: {
       light: reds[100],

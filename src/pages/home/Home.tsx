@@ -3,7 +3,9 @@ import { useNotas } from 'hooks';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Box } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import { Box, Fab } from '@mui/material';
+import { NotaTypeResponse } from '@types';
 
 interface CreatePageProps {
   children?: React.ReactNode;
@@ -13,8 +15,8 @@ interface CreatePageProps {
 const CreatePage : FC<CreatePageProps> = ({ children, nav }) => {
   const { t } = useTranslation();
   const notas = useNotas();
-  
-  console.log('notas', notas);
+
+  const handleOnNotaCreation = async (nota: NotaTypeResponse) => {};
 
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   return (
@@ -31,6 +33,9 @@ const CreatePage : FC<CreatePageProps> = ({ children, nav }) => {
           </PaperContainer>
         </Box>
       </Box>
+      <Fab color="primary" aria-label="add" className="fixed bottom-10 right-10">
+        <AddIcon />
+      </Fab>
     </Box>
   )
 };

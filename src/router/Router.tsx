@@ -1,5 +1,5 @@
 
-import { Home } from 'pages';
+import { Home, NewNote } from 'pages';
 import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom';
 
 const router = () =>
@@ -10,7 +10,13 @@ const router = () =>
         element={
           <Home nav={0} />
         }
-      />
+      />,
+      <Route
+        path="/new"
+        element={
+          <NewNote />
+        }
+      />,
     ])
   );
 

@@ -1,15 +1,16 @@
 
-import theme from 'config/theme/theme';
 import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { NotaService } from 'services';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {
     Card, CardActions, CardContent, CardHeader, Collapse, IconButton, IconButtonProps, Step,
     StepLabel, Stepper, styled, Typography
 } from '@mui/material';
-import { NotaType, NotaTypeResponse } from '@types';
+import { NotaType, NotaTypeResponse, VersionTypeResponse } from '@types';
+
+import NotaPopover from '../popover/NotaPopover';
 
 interface CardProps {
   nota: NotaTypeResponse;
@@ -35,10 +36,15 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 const LanguageCard: FC<CardProps> = ({ nota, onClick, selected }) => {
   const { t } = useTranslation();
   const { title, content, created_at } = nota;
+  
+  const [versions, setVersions] = useState<VersionTypeResponse[]>([]);
+  const [expanded, setExpanded] = useState<boolean>(false);
 
-  const [expanded, setExpanded] = useState(false);
-
-  const handleExpandClick = () => {
+  const handleExpandClick = async (nota_id: string) => {
+    if (!nota_id) return;
+    const consumer = new NotaService();
+    const versions = await consumer.getVersionsFromNota(nota_id);
+    setVersions(versions);
     setExpanded(!expanded);
   };
 
@@ -46,9 +52,7 @@ const LanguageCard: FC<CardProps> = ({ nota, onClick, selected }) => {
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
         action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
+          <NotaPopover nota={nota} />
         }
         title={title}
         subheader={new Date(created_at).toLocaleDateString()}
@@ -61,7 +65,7 @@ const LanguageCard: FC<CardProps> = ({ nota, onClick, selected }) => {
       <CardActions disableSpacing>
         <ExpandMore
           expand={expanded}
-          onClick={handleExpandClick}
+          onClick={() => handleExpandClick(nota.id)}
           aria-expanded={expanded}
           aria-label="show more"
         >
@@ -71,18 +75,15 @@ const LanguageCard: FC<CardProps> = ({ nota, onClick, selected }) => {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Stepper orientation='vertical'>
-            <Step>
-              <StepLabel>Step 1</StepLabel>
-            </Step>
-            <Step>
-              <StepLabel>Step 2</StepLabel>
-            </Step>
-            <Step>
-              <StepLabel>Step 3</StepLabel>
-            </Step>
-            <Step>
-              <StepLabel>Step 4</StepLabel>
-            </Step>
+            {versions.map((version, index) => (
+              <Step key={index}>
+                <StepLabel>
+                  <Typography variant='h6'>{version.id}</Typography>
+                  <Typography variant='body1'>{new Date(version.created_at).toDateString()}</Typography>
+                  <Typography variant='body2'>{version.content}</Typography>
+                </StepLabel>
+              </Step>
+            ))}
           </Stepper>
         </CardContent>
       </Collapse>
