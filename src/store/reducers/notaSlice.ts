@@ -1,13 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NotaType } from '@types';
+import { NotaTypeResponse } from '@types';
 
 import type { NotaState } from "../store";
 
 export const notaSlice = createSlice({
   name: "nota",
-  initialState: [] as NotaType[],
+  initialState: [] as NotaTypeResponse[],
   reducers: {
-    setNotas: (state, action: PayloadAction<NotaType[]>) => action.payload,
+    setNotas: (state, action: PayloadAction<NotaTypeResponse[]>) =>
+      action.payload,
     clearNota: () => [],
   },
 });

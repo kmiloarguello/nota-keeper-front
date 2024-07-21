@@ -3,12 +3,12 @@ import { NotaService } from 'services';
 import { useNotaDispatch, useNotaSelector } from 'store/hooks';
 import { selectNotas, setNotas as setGlobalNotas } from 'store/reducers/notaSlice';
 
-import { NotaType } from '@types';
+import { NotaTypeResponse } from '@types';
 
-const useNotas = (): NotaType[]  => {
+const useNotas = (): NotaTypeResponse[]  => {
   const dispatch = useNotaDispatch();
   const globalNotas  = useNotaSelector(selectNotas);
-  const [notas, setNotas] = useState<NotaType[]>(globalNotas);
+  const [notas, setNotas] = useState<NotaTypeResponse[]>(globalNotas);
 
   useEffect(() => {
     const getNotas = async () => {
@@ -21,8 +21,7 @@ const useNotas = (): NotaType[]  => {
     getNotas();
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [globalNotas]);
-
+  }, []);
 
   return notas;
 };

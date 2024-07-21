@@ -1,4 +1,4 @@
-import { Menu } from 'components';
+import { Card as NotaCard, Menu, PaperContainer } from 'components';
 import { useNotas } from 'hooks';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -22,7 +22,13 @@ const CreatePage : FC<CreatePageProps> = ({ children, nav }) => {
       <Menu nav={nav} open={openMenu} setOpen={setOpenMenu} />
       <Box className={`w-[808px] transition-all ease-in-out ${openMenu ? 'ml-[300px]' : 'ml-40'}`}>
         <Box className="mt-8">
-          {children}
+          <PaperContainer>
+            {
+              notas.map((nota, index) => (
+                <NotaCard key={index} nota={nota} />
+              ))
+            }
+          </PaperContainer>
         </Box>
       </Box>
     </Box>
