@@ -1,14 +1,15 @@
 import { gradients } from 'config/theme/theme';
-import { forwardRef, useState } from 'react';
+import { useNotas } from 'hooks';
+import { FC, forwardRef, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { NotaService } from 'services';
-import { useNotaDispatch, useNotaSelector } from 'store/hooks';
-import { selectNotas, setNotas } from 'store/reducers/notaSlice';
+import { useNotaDispatch } from 'store/hooks';
+import { setNotas } from 'store/reducers/notaSlice';
 import * as yup from 'yup';
 
-import { NotaType, NotaTypeRequest } from '@/@types';
+import { NotaType, NotaTypeRequest, NotaTypeResponse } from '@/@types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Paper, TextField, Typography } from '@mui/material';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
@@ -21,9 +22,11 @@ const schema = yup.object().shape({
   content: yup.string().required("Content is required"),
 });
 
-const defaultValues: NotaType = {
-  title: "",
-  content: "",
+const defaultValues = (nota_id?: string, notas?: NotaTypeResponse[]) : NotaType => {
+  if (!nota_id) return { title: "", content: "" };
+  const nota = notas?.find((nota) => String(nota.id) === nota_id);
+  if (!nota) return { title: "", content: "" };
+  return { title: nota.title, content: nota.content };
 };
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(
@@ -32,14 +35,24 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(
   }
 );
 
-const SignInPage: React.FC = () => {
+interface NewEditNoteProps {
+  nota_id?: string;
+}
+
+const NewEditNote: FC<NewEditNoteProps> = ({ nota_id }) => {
   const dispatch = useNotaDispatch();
-  const notas  = useNotaSelector(selectNotas);
+  const notas  = useNotas();
+
+  console.log("nn", notas);
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  // get nota_id from url
+  const { id } = useParams();
+
   const { control, formState, handleSubmit, reset } = useForm({
     mode: "onChange",
-    defaultValues,
+    defaultValues: { title: "", content: "" },
     resolver: yupResolver(schema),
   });
 
@@ -52,8 +65,14 @@ const SignInPage: React.FC = () => {
     try {
       const notaData = { ...data, user_id: "1" } as NotaTypeRequest;
       const consumer = new NotaService();
-      const nota = await consumer.create(notaData);
-      dispatch(setNotas([...notas, nota]));
+      if (id) {
+        const nota = await consumer.update(id, notaData);
+        dispatch(setNotas([...notas, nota]));
+      } else {
+        const nota = await consumer.create(notaData);
+        dispatch(setNotas([...notas, nota]));
+      }
+      
       reset();
       navigate("/");
     } catch (error) {
@@ -61,6 +80,12 @@ const SignInPage: React.FC = () => {
     }
     setIsSubmitting(false);
   };
+
+  useEffect(() => {
+    if (!id || !notas.length) return;
+    // set default values to each field
+    reset(defaultValues(id, notas));
+  }, [id, notas]);
 
   return (
     <Box
@@ -132,4 +157,4 @@ const SignInPage: React.FC = () => {
   );
 };
 
-export default SignInPage;
+export default NewEditNote;

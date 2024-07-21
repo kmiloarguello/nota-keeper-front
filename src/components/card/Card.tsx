@@ -1,12 +1,13 @@
 
+import { IconEdit } from 'assets';
 import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NotaService } from 'services';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
-    Card, CardActions, CardContent, CardHeader, Collapse, IconButton, IconButtonProps, Step,
-    StepLabel, Stepper, styled, Typography
+    Box, Card, CardActions, CardContent, CardHeader, Collapse, IconButton, IconButtonProps, Stack,
+    Step, StepLabel, Stepper, styled, Typography
 } from '@mui/material';
 import { NotaType, NotaTypeResponse, VersionTypeResponse } from '@types';
 
@@ -78,9 +79,18 @@ const LanguageCard: FC<CardProps> = ({ nota, onClick, selected }) => {
             {versions.map((version, index) => (
               <Step key={index}>
                 <StepLabel>
-                  <Typography variant='h6'>{version.id}</Typography>
-                  <Typography variant='body1'>{new Date(version.created_at).toDateString()}</Typography>
-                  <Typography variant='body2'>{version.content}</Typography>
+                  <Stack direction='row' spacing={2}>
+                    <Box>
+                      <Typography variant='h6'>Version {version.id}</Typography>
+                      <Typography variant='body1'>{new Date(version.created_at).toDateString()}</Typography>
+                      <Typography variant='body2'>{version.content}</Typography>
+                    </Box>
+                    <Box>
+                      <IconButton>
+                        <IconEdit />
+                      </IconButton>
+                    </Box>
+                  </Stack>
                 </StepLabel>
               </Step>
             ))}

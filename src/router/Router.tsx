@@ -1,5 +1,5 @@
 
-import { Home, NewNote } from 'pages';
+import { Home, NewEditNote } from 'pages';
 import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom';
 
 const router = () =>
@@ -14,7 +14,13 @@ const router = () =>
       <Route
         path="/new"
         element={
-          <NewNote />
+          <NewEditNote />
+        }
+      />,
+      <Route
+        path="/edit/:id"
+        element={
+          <NewEditNote />
         }
       />,
     ])

@@ -1,4 +1,4 @@
 import Home from "./home/Home";
-import NewNote from "./new-note/NewNote";
+import NewEditNote from "./new-edit-note/NewEditNote";
 
-export { Home, NewNote };
+export { Home, NewEditNote };

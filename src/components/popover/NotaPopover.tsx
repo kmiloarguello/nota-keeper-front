@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { NotaService } from 'services';
 
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -10,6 +11,7 @@ interface NotaPopoverProps {
 }
 
 const NotaPopover : FC<NotaPopoverProps> = ({ nota }) => {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -18,6 +20,7 @@ const NotaPopover : FC<NotaPopoverProps> = ({ nota }) => {
 
   const handleEditNota = async (nota_id: string) => {
     if (!nota_id) return;
+    navigate(`/edit/${nota_id}`);
     // Todo: Implement edit nota
   };
 

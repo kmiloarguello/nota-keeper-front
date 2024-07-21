@@ -2,6 +2,7 @@ import { Card as NotaCard, Menu, PaperContainer } from 'components';
 import { useNotas } from 'hooks';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Fab } from '@mui/material';
@@ -33,7 +34,7 @@ const CreatePage : FC<CreatePageProps> = ({ children, nav }) => {
           </PaperContainer>
         </Box>
       </Box>
-      <Fab color="primary" aria-label="add" className="fixed bottom-10 right-10">
+      <Fab component={Link} to="/new" color="primary" aria-label="add" className="fixed bottom-10 right-10">
         <AddIcon />
       </Fab>
     </Box>
