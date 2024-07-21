@@ -1,5 +1,6 @@
 
-import { IconEdit } from 'assets';
+import { IconEdit, IconSync } from 'assets';
+import { diffChars } from 'diff';
 import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NotaService } from 'services';
@@ -33,6 +34,19 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
     duration: theme.transitions.duration.shortest,
   }),
 }));
+
+const renderDiff = (noteContent: string, versionContent: string) => {
+  const diffResult = diffChars(versionContent, noteContent);
+  return diffResult.map((part : any, index: number) => {
+    if (part.added) {
+      return <span key={index} style={{ backgroundColor: 'lightgreen' }}>{part.value}</span>;
+    } else if (part.removed) {
+      return <span key={index} style={{ backgroundColor: 'salmon' }}>{part.value}</span>;
+    } else {
+      return <span key={index}>{part.value}</span>;
+    }
+  });
+};
 
 const LanguageCard: FC<CardProps> = ({ nota, onClick, selected }) => {
   const { t } = useTranslation();
@@ -83,11 +97,14 @@ const LanguageCard: FC<CardProps> = ({ nota, onClick, selected }) => {
                     <Box>
                       <Typography variant='h6'>Version {version.id}</Typography>
                       <Typography variant='body1'>{new Date(version.created_at).toDateString()}</Typography>
-                      <Typography variant='body2'>{version.content}</Typography>
+                      <Typography variant='body2'>{renderDiff(nota.content, version.content)}</Typography>
                     </Box>
                     <Box>
                       <IconButton>
                         <IconEdit />
+                      </IconButton>
+                      <IconButton>
+                        <IconSync />
                       </IconButton>
                     </Box>
                   </Stack>
