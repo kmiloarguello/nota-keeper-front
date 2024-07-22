@@ -1,14 +1,15 @@
 
-import { IconEdit, IconSync } from 'assets';
+import { gradients } from 'config/theme/theme';
 import { diffChars } from 'diff';
 import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NotaService } from 'services';
 
+import CheckIcon from '@mui/icons-material/Check';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
     Box, Card, CardActions, CardContent, CardHeader, Collapse, IconButton, IconButtonProps, Stack,
-    Step, StepLabel, Stepper, styled, Typography
+    Step, StepLabel, Stepper, styled, Tooltip, Typography
 } from '@mui/material';
 import { NotaType, NotaTypeResponse, VersionTypeResponse } from '@types';
 
@@ -63,17 +64,30 @@ const LanguageCard: FC<CardProps> = ({ nota, onClick, selected }) => {
     setExpanded(!expanded);
   };
 
+  const handleSelectVersion = (version_id: string) => {
+    if (!version_id) return;
+    try {
+      const consumer = new NotaService();
+      consumer.selectVersion(nota.id, version_id);
+      // onClick && onClick(nota);
+    } catch (error) {
+      console.error('Error selecting version:', error);
+    }
+  };
+
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card className="rounded-xl pinterest-item bg-white border border-gray-300" sx={{
+      '&.MuiPaper-root': {
+        background: gradients.menu
+      },
+    }} >
       <CardHeader
-        action={
-          <NotaPopover nota={nota} />
-        }
+        action={<NotaPopover nota={nota} />}
         title={title}
         subheader={new Date(created_at).toLocaleDateString()}
       />
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="text.secondary" className='font-medium'>
           {content}
         </Typography>
       </CardContent>
@@ -95,17 +109,16 @@ const LanguageCard: FC<CardProps> = ({ nota, onClick, selected }) => {
                 <StepLabel>
                   <Stack direction='row' spacing={2}>
                     <Box>
-                      <Typography variant='h6'>Version {version.id}</Typography>
-                      <Typography variant='body1'>{new Date(version.created_at).toDateString()}</Typography>
-                      <Typography variant='body2'>{renderDiff(nota.content, version.content)}</Typography>
+                      <Typography variant='h6' color="text.primary">Version {version.id}</Typography>
+                      <Typography variant='body1' className="text-black">{new Date(version.created_at).toDateString()}</Typography>
+                      <Typography variant='body2' className="text-black">{renderDiff(nota.content, version.content)}</Typography>
                     </Box>
                     <Box>
-                      <IconButton>
-                        <IconEdit />
-                      </IconButton>
-                      <IconButton>
-                        <IconSync />
-                      </IconButton>
+                      <Tooltip title={t('select-version')} placement='top'>
+                        <IconButton onClick={() => handleSelectVersion(version.id)}>
+                          <CheckIcon />
+                        </IconButton>
+                      </Tooltip>
                     </Box>
                   </Stack>
                 </StepLabel>

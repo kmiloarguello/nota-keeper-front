@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme } from '@mui/material/styles';
 
 export const reds = {
   100: "#FFCDD2",
@@ -23,7 +23,7 @@ export const blues = {
 export const greyIsh = {
   400: "#0C123A",
   300: "#303045",
-  200: "#9494A9",
+  200: "#DDDDDD",
   100: "#FFFFFF",
 };
 
@@ -42,8 +42,8 @@ export const lightPaletteText = {
 };
 
 export const darkPaletteText = {
-  primary: purples[200],
-  secondary: blues[200],
+  primary: "#ffffff",
+  secondary: "#ffffff",
   disabled: greyIsh[300],
   highlight: greyIsh[100],
   contrast: greyIsh[400],
@@ -60,7 +60,7 @@ const theme = createTheme({
       white: greyIsh[100],
     },
     primary: {
-      light: purples[100],
+      light: "#FFFFFF",
       main: purples[200],
       dark: purples[300],
       contrastText: lightPaletteText.primary,
@@ -72,7 +72,6 @@ const theme = createTheme({
       contrastText: lightPaletteText.primary,
     },
     background: {
-      paper: greyIsh[200],
       default: greyIsh[100],
     },
     error: {

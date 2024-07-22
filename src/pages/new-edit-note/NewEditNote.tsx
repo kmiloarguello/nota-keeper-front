@@ -1,3 +1,4 @@
+import { Menu } from 'components';
 import { gradients } from 'config/theme/theme';
 import { useNotas } from 'hooks';
 import { FC, forwardRef, useEffect, useState } from 'react';
@@ -22,7 +23,10 @@ const schema = yup.object().shape({
   content: yup.string().required("Content is required"),
 });
 
-const defaultValues = (nota_id?: string, notas?: NotaTypeResponse[]) : NotaType => {
+const defaultValues = (
+  nota_id?: string,
+  notas?: NotaTypeResponse[]
+): NotaType => {
   if (!nota_id) return { title: "", content: "" };
   const nota = notas?.find((nota) => String(nota.id) === nota_id);
   if (!nota) return { title: "", content: "" };
@@ -41,7 +45,7 @@ interface NewEditNoteProps {
 
 const NewEditNote: FC<NewEditNoteProps> = ({ nota_id }) => {
   const dispatch = useNotaDispatch();
-  const notas  = useNotas();
+  const notas = useNotas();
 
   console.log("nn", notas);
   const { t } = useTranslation();
@@ -57,10 +61,11 @@ const NewEditNote: FC<NewEditNoteProps> = ({ nota_id }) => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
 
   const { errors } = formState;
 
-  const onSubmit = async (data : NotaType) => {
+  const onSubmit = async (data: NotaType) => {
     setIsSubmitting(true);
     try {
       const notaData = { ...data, user_id: "1" } as NotaTypeRequest;
@@ -72,7 +77,7 @@ const NewEditNote: FC<NewEditNoteProps> = ({ nota_id }) => {
         const nota = await consumer.create(notaData);
         dispatch(setNotas([...notas, nota]));
       }
-      
+
       reset();
       navigate("/");
     } catch (error) {
@@ -88,29 +93,35 @@ const NewEditNote: FC<NewEditNoteProps> = ({ nota_id }) => {
   }, [id, notas]);
 
   return (
-    <Box
-      sx={{ background: gradients.full }}
-      className="flex flex-col flex-auto items-center sm:justify-center min-w-0 md:h-full"
-    >
-      <Box className="bg-none p-4 w-11/12 md:w-1/2 lg:w-96 mx-auto">
+    <Box className="flex flex-col flex-auto items-center sm:justify-center min-w-0 md:h-full">
+      <Menu nav={0} open={openMenu} setOpen={setOpenMenu} />
+      <Box className="p-4 w-11/12 md:w-1/2 lg:w-96 mx-auto">
         <Typography
           variant="h2"
-          className="font-inter text-white text-center mt-2 text-4xl md:text-3xl font-semibold tracking-tight leading-tight"
+          className="font-inter text-white text-center mt-2 text-4xl md:text-3xl font-semibold tracking-tight leading-tight text-black"
         >
-          {t("signin.login-to-enflu")}
+          {t("new-edit-note.title")}
         </Typography>
       </Box>
-      <Paper className="bg-none bg-enflu-grey-400 p-4 w-11/12 md:w-1/2 lg:w-96 mx-auto rounded-xl">
+      <Paper
+        className="p-4 w-11/12 md:w-1/2 lg:w-96 mx-auto rounded-xl"
+        sx={{
+          "&": {
+            background: gradients.menu,
+          },
+        }}
+      >
         <form
-          name="loginForm"
+          name="new-edit-note"
           noValidate
-          className="flex flex-col justify-center w-full mb-4 sm:mb-0"
+          className="flex flex-col gap-y-4 justify-center w-full mb-4 sm:mb-0"
           onSubmit={handleSubmit(onSubmit)}
         >
           <Controller
             name="title"
             control={control}
             render={({ field }) => (
+              <>
                 <TextField
                   {...field}
                   className="text-slate-300 font-light grow w-full rounded-lg"
@@ -122,12 +133,17 @@ const NewEditNote: FC<NewEditNoteProps> = ({ nota_id }) => {
                   size="small"
                   placeholder="Title"
                 />
+                {errors.title && (
+                  <Typography variant='caption' className='text-red-500 -mt-4'>{errors.title.message}</Typography>
+                )}
+              </>
             )}
           />
           <Controller
             name="content"
             control={control}
             render={({ field }) => (
+              <>
                 <TextField
                   {...field}
                   multiline
@@ -139,15 +155,19 @@ const NewEditNote: FC<NewEditNoteProps> = ({ nota_id }) => {
                   variant="outlined"
                   fullWidth
                   size="small"
-                  placeholder='Content'
+                  placeholder="Content"
                 />
+                {errors.content && (
+                  <Typography variant='caption' className='text-red-500 -mt-4'>{errors.content.message}</Typography>
+                )}
+              </>
             )}
           />
           <Button
             type="submit"
             disabled={isSubmitting}
             variant="contained"
-            className="text-enflu-purple-100 mx-auto underline hover:bg-transparent normal-case my-4"
+            className="bg-white text-black mx-auto normal-case my-4"
           >
             Submit
           </Button>

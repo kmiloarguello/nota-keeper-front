@@ -1,4 +1,3 @@
-import { blues, gradients } from 'config/theme/theme';
 import { FC } from 'react';
 
 import { Box, Paper } from '@mui/material';
@@ -10,11 +9,8 @@ interface PaperContainerProps {
 const PaperContainer : FC<PaperContainerProps> = ({ children }) => {
   return (
     <Box 
-      sx={{ backgroundImage: gradients.full }} 
-      className=" animate-gradient-circle mt-4 p-[1px] rounded-0 sm:rounded-2xl lg:w-[589px] mx-auto">
-      <Paper 
-        sx={{ backgroundColor: blues[500] }} 
-        className="shadow-none rounded-0 sm:pt-auto sm:min-h-auto sm:rounded-2xl sm:shadow lg:w-[588px] mx-auto">
+      className="mt-4 p-[1px] rounded-0 sm:rounded-2xl mx-auto">
+      <Paper className="shadow-none rounded-0 sm:pt-auto sm:min-h-auto sm:rounded-2xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-start bg-transparent">
         {children}
       </Paper>
     </Box>

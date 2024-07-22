@@ -1,23 +1,17 @@
 import { Card as NotaCard, Menu, PaperContainer } from 'components';
 import { useNotas } from 'hooks';
 import React, { FC, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Fab } from '@mui/material';
-import { NotaTypeResponse } from '@types';
 
 interface CreatePageProps {
-  children?: React.ReactNode;
   nav: number;
 };
 
-const CreatePage : FC<CreatePageProps> = ({ children, nav }) => {
-  const { t } = useTranslation();
+const CreatePage : FC<CreatePageProps> = ({ nav }) => {
   const notas = useNotas();
-
-  const handleOnNotaCreation = async (nota: NotaTypeResponse) => {};
 
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   return (

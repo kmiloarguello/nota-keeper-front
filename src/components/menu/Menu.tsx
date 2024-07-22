@@ -1,4 +1,4 @@
-import { IconCreate, IconLangFilter, IconProfile, IconProjects } from 'assets';
+import { IconCreate } from 'assets';
 import { MenuPurpleGradientListButton } from 'config/theme';
 import { gradients, greyIsh } from 'config/theme/theme';
 import { FC, useState } from 'react';
@@ -7,9 +7,10 @@ import { VscChevronLeft } from 'react-icons/vsc';
 import { Link } from 'react-router-dom';
 
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import HomeIcon from '@mui/icons-material/Home';
 import {
-    alpha, Avatar, Box, Button, CssBaseline, IconButton, ListItem, ListItemIcon, ListItemText,
-    Paper, Stack, Typography
+    alpha, Avatar, Box, CssBaseline, IconButton, ListItem, ListItemIcon, ListItemText, Paper, Stack,
+    Typography
 } from '@mui/material';
 import MuiDrawer, { DrawerProps } from '@mui/material/Drawer';
 import { styled } from '@mui/material/styles';
@@ -77,26 +78,22 @@ const Drawer = styled(MuiDrawer, {
   
 const menuItemsLogged = (t : any) => [
   {
+    icon: <HomeIcon />,
+    text: t('menu.home'),
+    dest: '/',
+  },
+  {
     icon: <IconCreate />,
     text: t('menu.create'),
-    dest: '/create/upload',
+    dest: '/new',
   },
-  {
-    icon: <IconProjects />,
-    text: t('menu.projects'),
-    dest: '/projects/drafts',
-  },
-  {
-      icon: <IconProfile />,
-      text: t('menu.profile'),
-      dest: '/connect',
-    },
 ];
   
 const Menu : FC<MenuProps> = ({ nav, open: propsOpen = false, setOpen : propsSetOpen = () => {} }) => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const [isRotated, setIsRotated] = useState<boolean>(false);
     const [open, setOpen] = useState<boolean>(propsOpen);
+    const isMobile = window.innerWidth < 768;
 
     const closeMenu = () => {
       setOpen(false);
@@ -108,12 +105,6 @@ const Menu : FC<MenuProps> = ({ nav, open: propsOpen = false, setOpen : propsSet
       propsSetOpen && propsSetOpen(!open);
     }
 
-    const handleLanguageChange = (lang: string) => {
-      if (lang === i18n.language) return;
-      i18n.changeLanguage(lang);
-    }
-
-    const isMobile = window.innerWidth < 768;
 
     return (
       <Box className="flex">
@@ -151,7 +142,7 @@ const Menu : FC<MenuProps> = ({ nav, open: propsOpen = false, setOpen : propsSet
                           sx={{ 
                             mr: open ? 3 : 'auto', 
                             fontSize: '1.4em',
-                            color: alpha(greyIsh[100], .5),
+                            color: alpha(greyIsh[100], 1),
                             ...(nav === index && {
                               color: "common.white",
                             }) 
@@ -168,21 +159,8 @@ const Menu : FC<MenuProps> = ({ nav, open: propsOpen = false, setOpen : propsSet
           </Box>
           <Stack direction="column" className="mx-4 mb-2">
             <Paper sx={{ backgroundColor: alpha(greyIsh[100], .05 ) }} className="flex flex-col gap-y-4 justify-center items-center rounded-3xl p-6">
-              <div>CA</div>
+              <Typography variant="caption" className="text-center font-medium">NOTA<br/>KEEPER</Typography>
             </Paper>
-            <Button 
-              sx={{ backgroundColor: alpha(greyIsh[400], .3) }}
-              variant="contained" 
-              color="primary" 
-              endIcon={<IconLangFilter />} 
-              className={` mx-auto ${open ? 'w-full rounded-2xl' : 'rounded-full'} flex justify-between mt-4`}
-              onClick={() => handleLanguageChange(i18n.language === 'en' ? 'ar' : 'en')}
-              >
-              {open && <Box className="flex flex-col justify-left items-start">
-                <Typography color="secondary.light" variant="body2" className="font-normal normal-case">{t('menu.language')}</Typography>
-                <Typography variant="caption" className="text-white">{t('menu.language-english')}</Typography>
-              </Box>}
-            </Button>
           </Stack>
         </Drawer>
       </Box>
