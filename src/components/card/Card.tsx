@@ -12,12 +12,10 @@ import {
     Box, Card, CardActions, CardContent, CardHeader, Collapse, IconButton, IconButtonProps, Stack,
     Step, StepLabel, Stepper, styled, Tooltip, Typography
 } from '@mui/material';
-import { NotaType, NotaTypeResponse, VersionTypeResponse } from '@types';
+import { NotaTypeResponse, VersionTypeResponse } from '@types';
 
 interface CardProps {
   nota: NotaTypeResponse;
-  selected?: boolean;
-  onClick?: (nota: NotaType) => void;
 }
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -40,7 +38,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
  * @param {string} version_id
  * @returns {void}
  */
-const handleSelectVersion = (nota_id: string, version: VersionTypeResponse) => {
+const handleSelectVersion = (nota_id: string, version: VersionTypeResponse): void => {
   if (!nota_id || !version) return;
   try {
     const consumer = new NotaService();
@@ -130,7 +128,7 @@ const renderDiff = (
   return diffs;
 };
 
-const LanguageCard: FC<CardProps> = ({ nota, onClick, selected }) => {
+const LanguageCard: FC<CardProps> = ({ nota }) => {
   const { t } = useTranslation();
   const { title, content, created_at } = nota;
 
