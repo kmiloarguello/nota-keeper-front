@@ -34,3 +34,9 @@ To launch the Nota Keeper project using Docker, follow these steps:
     docker compose -f docker-compose.yml up --build
     ```
 4. **Access the application:** Open your browser and go to `http://localhost:3000` to start using Nota Keeper.
+
+
+### Things to Improve
+
+- **Add authentication and authorization:** Implement login functionality to secure user data.
+- **Language support:** Add multi-language support for a more inclusive user experience.
