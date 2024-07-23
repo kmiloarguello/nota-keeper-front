@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { NotaService } from 'services';
 
@@ -11,6 +12,7 @@ interface NotaPopoverProps {
 }
 
 const NotaPopover : FC<NotaPopoverProps> = ({ nota }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -65,12 +67,12 @@ const NotaPopover : FC<NotaPopoverProps> = ({ nota }) => {
         <List component="nav" aria-label="secondary mailbox folders">
           <ListItem disablePadding>
             <ListItemButton onClick={() => handleEditNota(nota.id)}>
-              <ListItemText primary="Edit" />
+              <ListItemText primary={t('edit')} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
             <ListItemButton  onClick={() => handleDeleteNota(nota.id)}>
-              <ListItemText primary="Delete" />
+              <ListItemText primary={t('delete')} />
             </ListItemButton>
           </ListItem>
         </List>

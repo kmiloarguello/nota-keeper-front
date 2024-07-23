@@ -158,8 +158,11 @@ const Menu : FC<MenuProps> = ({ nav, open: propsOpen = false, setOpen : propsSet
             }
           </Box>
           <Stack direction="column" className="mx-4 mb-2">
-            <Paper sx={{ backgroundColor: alpha(greyIsh[100], .05 ) }} className="flex flex-col gap-y-4 justify-center items-center rounded-3xl p-6">
+            <Paper sx={{ backgroundColor: alpha(greyIsh[100], .05 ) }} className="flex flex-col justify-center items-center rounded-3xl p-6">
               <Typography variant="caption" className="text-center font-medium">NOTA<br/>KEEPER</Typography>
+              <br />
+              <Typography variant="caption" className="text-center font-light text-xs">{t('home.created-by')}</Typography>
+              <Link to="https://camiloarguello.xyz" target='_blank' className="text-center font-semibold text-blue-500 text-sm">CA</Link>
             </Paper>
           </Stack>
         </Drawer>

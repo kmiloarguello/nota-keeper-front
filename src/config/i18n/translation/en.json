@@ -1,1 +1,25 @@
-{}
+{
+  "edit": "Edit",
+  "delete": "Delete",
+  "show-more": "Show more",
+  "version": "Version",
+  "select-version": "Select version",
+  "menu": {
+    "home": "Home",
+    "create": "Create"
+  },
+  "home": {
+    "title": "Note's list",
+    "description": "Here you can see all your notes",
+    "add-note": "Add a new note",
+    "created-by": "Created by"
+  },
+  "new-edit": {
+    "title": "Create new note",
+    "title-is-required": "Title is required",
+    "content-is-required": "Content is required",
+    "create-note": "Create note",
+    "title-placeholder": "Enter your note title here...",
+    "content-placeholder": "Start typing your note content here..."
+  }
+}

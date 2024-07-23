@@ -1,19 +1,18 @@
 
+import { IconArrowRight } from 'assets';
+import { NotaPopover } from 'components';
 import { gradients } from 'config/theme/theme';
 import { diffChars } from 'diff';
 import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NotaService } from 'services';
 
-import CheckIcon from '@mui/icons-material/Check';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
     Box, Card, CardActions, CardContent, CardHeader, Collapse, IconButton, IconButtonProps, Stack,
     Step, StepLabel, Stepper, styled, Tooltip, Typography
 } from '@mui/material';
 import { NotaType, NotaTypeResponse, VersionTypeResponse } from '@types';
-
-import NotaPopover from '../popover/NotaPopover';
 
 interface CardProps {
   nota: NotaTypeResponse;
@@ -96,7 +95,7 @@ const LanguageCard: FC<CardProps> = ({ nota, onClick, selected }) => {
           expand={expanded}
           onClick={() => handleExpandClick(nota.id)}
           aria-expanded={expanded}
-          aria-label="show more"
+          aria-label={t('show-more')}
         >
           <ExpandMoreIcon />
         </ExpandMore>
@@ -109,14 +108,14 @@ const LanguageCard: FC<CardProps> = ({ nota, onClick, selected }) => {
                 <StepLabel>
                   <Stack direction='row' spacing={2}>
                     <Box>
-                      <Typography variant='h6' color="text.primary">Version {version.id}</Typography>
+                      <Typography variant='h6' color="text.primary">{t('version')} {version.id}</Typography>
                       <Typography variant='body1' className="text-black">{new Date(version.created_at).toDateString()}</Typography>
                       <Typography variant='body2' className="text-black">{renderDiff(nota.content, version.content)}</Typography>
                     </Box>
-                    <Box>
+                    <Box className="self-center">
                       <Tooltip title={t('select-version')} placement='top'>
                         <IconButton onClick={() => handleSelectVersion(version.id)}>
-                          <CheckIcon />
+                          <IconArrowRight />
                         </IconButton>
                       </Tooltip>
                     </Box>

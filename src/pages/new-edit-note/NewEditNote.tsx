@@ -1,6 +1,7 @@
 import { Menu } from 'components';
 import { gradients } from 'config/theme/theme';
 import { useNotas } from 'hooks';
+import { TFunction } from 'i18next';
 import { FC, forwardRef, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -18,10 +19,11 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert';
 /**
  * Form Validation Schema
  */
-const schema = yup.object().shape({
-  title: yup.string().required("Title is required"),
-  content: yup.string().required("Content is required"),
-});
+const schema = (t: TFunction<"translation", undefined>) =>
+  yup.object().shape({
+    title: yup.string().required(t("new-edit.title-is-required")),
+    content: yup.string().required(t("new-edit.content-is-required")),
+  });
 
 const defaultValues = (
   nota_id?: string,
@@ -47,7 +49,6 @@ const NewEditNote: FC<NewEditNoteProps> = ({ nota_id }) => {
   const dispatch = useNotaDispatch();
   const notas = useNotas();
 
-  console.log("nn", notas);
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -57,7 +58,7 @@ const NewEditNote: FC<NewEditNoteProps> = ({ nota_id }) => {
   const { control, formState, handleSubmit, reset } = useForm({
     mode: "onChange",
     defaultValues: { title: "", content: "" },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema(t)),
   });
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -90,21 +91,18 @@ const NewEditNote: FC<NewEditNoteProps> = ({ nota_id }) => {
     if (!id || !notas.length) return;
     // set default values to each field
     reset(defaultValues(id, notas));
+
+    // eslint-disable-next-line
   }, [id, notas]);
 
   return (
     <Box className="flex flex-col flex-auto items-center sm:justify-center min-w-0 md:h-full">
       <Menu nav={0} open={openMenu} setOpen={setOpenMenu} />
-      <Box className="p-4 w-11/12 md:w-1/2 lg:w-96 mx-auto">
-        <Typography
-          variant="h2"
-          className="font-inter text-white text-center mt-2 text-4xl md:text-3xl font-semibold tracking-tight leading-tight text-black"
-        >
-          {t("new-edit-note.title")}
-        </Typography>
+      <Box className="p-4 w-11/12 md:w-2/3 lg:w-96 mx-auto">
+      <Typography variant="h1" className="text-4xl font-bold text-center text-slate-500 my-8">{t("new-edit.title")}</Typography>
       </Box>
       <Paper
-        className="p-4 w-11/12 md:w-1/2 lg:w-96 mx-auto rounded-xl"
+        className="p-8 w-11/12 md:w-2/3 lg:w-96 mx-auto rounded-xl"
         sx={{
           "&": {
             background: gradients.menu,
@@ -131,10 +129,12 @@ const NewEditNote: FC<NewEditNoteProps> = ({ nota_id }) => {
                   variant="outlined"
                   fullWidth
                   size="small"
-                  placeholder="Title"
+                  placeholder={t("new-edit.title-placeholder")}
                 />
                 {errors.title && (
-                  <Typography variant='caption' className='text-red-500 -mt-4'>{errors.title.message}</Typography>
+                  <Typography variant="caption" className="text-red-500 -mt-4">
+                    {errors.title.message}
+                  </Typography>
                 )}
               </>
             )}
@@ -155,10 +155,12 @@ const NewEditNote: FC<NewEditNoteProps> = ({ nota_id }) => {
                   variant="outlined"
                   fullWidth
                   size="small"
-                  placeholder="Content"
+                  placeholder={t("new-edit.content-placeholder")}
                 />
                 {errors.content && (
-                  <Typography variant='caption' className='text-red-500 -mt-4'>{errors.content.message}</Typography>
+                  <Typography variant="caption" className="text-red-500 -mt-4">
+                    {errors.content.message}
+                  </Typography>
                 )}
               </>
             )}
@@ -169,7 +171,7 @@ const NewEditNote: FC<NewEditNoteProps> = ({ nota_id }) => {
             variant="contained"
             className="bg-white text-black mx-auto normal-case my-4"
           >
-            Submit
+            {t("new-edit.create-note")}
           </Button>
         </form>
       </Paper>

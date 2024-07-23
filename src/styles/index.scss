@@ -28,6 +28,7 @@ iframe {
 
 .menu-item-button {
   &:hover {
+    @apply bg-gradient-to-r from-purple-500 to-blue-500;
     .menu-item-button-text {
       opacity: 1 !important;
     }
