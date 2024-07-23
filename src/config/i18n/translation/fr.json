@@ -1,1 +1,25 @@
-{}
+{
+  "edit": "Modifier",
+  "delete": "Supprimer",
+  "show-more": "Voir plus",
+  "version": "Version",
+  "select-version": "Sélectionner la version",
+  "menu": {
+    "home": "Accueil",
+    "create": "Créer"
+  },
+  "home": {
+    "title": "Liste des notes",
+    "description": "Ici, vous pouvez voir toutes vos notes",
+    "add-note": "Ajouter une nouvelle note",
+    "created-by": "Créé par"
+  },
+  "new-edit": {
+    "title": "Créer une nouvelle note",
+    "title-is-required": "Le titre est requis",
+    "content-is-required": "Le contenu est requis",
+    "create-note": "Créer la note",
+    "title-placeholder": "Entrez le titre de votre note ici...",
+    "content-placeholder": "Commencez à taper le contenu de votre note ici..."
+  }
+}

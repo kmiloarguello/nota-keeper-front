@@ -19,7 +19,7 @@ const CreatePage : FC<CreatePageProps> = ({ nav }) => {
   return (
     <Box className="bg-white flex flex-col flex-auto items-center sm:justify-center min-w-0 md:h-full">
       <Menu nav={nav} open={openMenu} setOpen={setOpenMenu} />
-      <Box className={`w-[808px] transition-all ease-in-out ${openMenu ? 'ml-[300px]' : 'ml-40'}`}>
+      <Box className={`w-[1000px] transition-all ease-in-out ${openMenu ? 'ml-[300px]' : 'ml-40'}`}>
         <Box className="mt-8">
           <Typography variant="h1" className="text-4xl font-bold text-center text-slate-500 pt-4">{t('home.title')}</Typography>
           <Typography variant="body1" className="text-xl text-center text-slate-600 pb-4">{t('home.description')}</Typography>
