@@ -63,12 +63,14 @@ class NotaService {
   // Select a version of a nota -> version becomes the current nota
   async selectVersion(
     nota_id: string,
-    version_id: string
+    version_id: string,
+    content: string
   ): Promise<NotaTypeResponse> {
     try {
-      const response = await axios.put(`${this.baseUrl}/${nota_id}/select`, {
-        version_id,
-      });
+      const response = await axios.put(
+        `${this.baseUrl}/${nota_id}/versions/select/${version_id}`,
+        { content }
+      );
       return response.data;
     } catch (error) {
       // Handle error

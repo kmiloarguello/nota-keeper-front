@@ -40,12 +40,12 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
  * @param {string} version_id
  * @returns {void}
  */
-const handleSelectVersion = (nota_id: string, version_id: string) => {
-  if (!nota_id || !version_id) return;
+const handleSelectVersion = (nota_id: string, version: VersionTypeResponse) => {
+  if (!nota_id || !version) return;
   try {
     const consumer = new NotaService();
-    consumer.selectVersion(nota_id, version_id);
-    // onClick && onClick(nota);
+    consumer.selectVersion(nota_id, version.id, version.content);
+    window.location.reload();
   } catch (error) {
     console.error("Error selecting version:", error);
   }
@@ -76,7 +76,7 @@ const renderDiff = (
             <Stack direction="row" spacing={2}>
               <Box>
                 <Typography variant="h6" color="text.primary">
-                  {t("version")} {version.id}
+                  {t("version")} {index + 1}
                 </Typography>
                 <Typography
                   variant="caption"
@@ -113,7 +113,7 @@ const renderDiff = (
               <Box className="self-center">
                 <Tooltip title={t("select-version")} placement="top">
                   <IconButton
-                    onClick={() => handleSelectVersion(nota_id, version.id)}
+                    onClick={() => handleSelectVersion(nota_id, version)}
                   >
                     <IconArrowRight />
                   </IconButton>
